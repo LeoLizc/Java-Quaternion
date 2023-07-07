@@ -10,6 +10,10 @@ public class Quaternion {
         this.k = k;
     }
 
+    public Quaternion(){
+        real=i=j=k=0;
+    }
+
     public Quaternion(float angle, float[] axis){
         set(angle, axis);
     }
@@ -53,13 +57,13 @@ public class Quaternion {
 
     public Quaternion mult(Quaternion q){
 
-
-        this.real = this.real*q.real - dotProd(q);
+        float real = this.real*q.real - dotProd(q);
         float [] cross = crossProd(q);
 
         this.i = cross[0] + q.i*this.real + q.real*this.i;
         this.j = cross[1] + q.j*this.real + q.real*this.j;
         this.k = cross[2] + q.k*this.real + q.real*this.k;
+        this.real = real;
 
         return this;
     }
@@ -70,9 +74,11 @@ public class Quaternion {
             throw new IllegalArgumentException("The axis should be 3Dimensional");
         }
 
-        Quaternion result = this.copy().mult(new Quaternion(0, point)).mult(getConjugate());
+        Quaternion copy = this.copy(), conjugated = this.getConjugate(), qPoint = new Quaternion(0, point[0], point[1], point[2]);
+        copy = copy.mult(qPoint);
+        copy = copy.mult(conjugated);
 
-        return new float[]{result.i,result.j,result.k};
+        return new float[]{copy.i,copy.j,copy.k};
     }
 
     private float dotProd(Quaternion q){
