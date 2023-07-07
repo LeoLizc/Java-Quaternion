@@ -1,6 +1,5 @@
 package com.leolizc.quaternion;
 
-
 public class Quaternion {
     protected float real, i, j, k;
 
