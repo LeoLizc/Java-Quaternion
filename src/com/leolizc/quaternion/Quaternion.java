@@ -106,4 +106,37 @@ public class Quaternion {
                 otherQ.j == this.j &&
                 otherQ.k == this.k;
     }
+
+    public float getAngle(){
+
+        if (Math.abs(real)>1){
+            throw new IllegalStateException("The quaternion is not normalized");
+        }
+
+        return (float) (2*Math.acos(real));
+    }
+
+    public float[] getAxis(){
+
+        if (Math.abs(real)>1){
+            throw new IllegalStateException("The quaternion is not normalized");
+        }
+
+        float sin = (float) Math.sqrt(1-real*real);
+        return new float[]{i/sin, j/sin, k/sin};
+    }
+
+    public float norm(){
+        return (float) Math.sqrt(real*real + i*i + j*j + k*k);
+    }
+
+    public Quaternion normalize(){
+        float norm = norm();
+        real /= norm;
+        i /= norm;
+        j /= norm;
+        k /= norm;
+
+        return this;
+    }
 }
