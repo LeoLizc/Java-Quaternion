@@ -94,4 +94,16 @@ public class Quaternion {
                 this.i*q.j-this.j*q.i
         };
     }
+
+    @Override
+    public boolean equals(Object other){
+        if(!(other instanceof Quaternion otherQ)){
+            return false;
+        }
+
+        return otherQ.real == this.real &&
+                otherQ.i == this.i &&
+                otherQ.j == this.j &&
+                otherQ.k == this.k;
+    }
 }

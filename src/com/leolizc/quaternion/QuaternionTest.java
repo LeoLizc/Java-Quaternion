@@ -29,10 +29,16 @@ class QuaternionTest {
         Quaternion quaternion = new Quaternion(1.0f, 2.0f, 3.0f, 4.0f);
         Quaternion conjugate = quaternion.getConjugate();
 
+        assertNotSame(quaternion, conjugate);
         assertEquals(1.0f, conjugate.real);
         assertEquals(-2.0f, conjugate.i);
         assertEquals(-3.0f, conjugate.j);
         assertEquals(-4.0f, conjugate.k);
+
+        Quaternion newConjugate = quaternion.conjugate();
+
+        assertSame(quaternion, newConjugate);
+        assertEquals(newConjugate, conjugate);
     }
 
     @Test
